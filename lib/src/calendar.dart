@@ -367,18 +367,22 @@ class _TableCalendarState extends State<TableCalendar>
             child: _buildCalendarContent(),
           ),
           GestureDetector(
-            onTapUp: (_) {
+            behavior: HitTestBehavior.translucent,
+            onTap: () {
               _toggleCalendarFormat();
             },
             child: _buildVerticalSwipeWrapper(
               child: Container(
-                margin: EdgeInsets.only(bottom: 20),
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                height: 5,
-                width: 30,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10)),
+                padding:
+                    EdgeInsets.only(bottom: 25, left: 10, right: 10, top: 5),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  height: 5,
+                  width: 30,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(50)),
+                ),
               ),
             ),
           )
@@ -447,7 +451,7 @@ class _TableCalendarState extends State<TableCalendar>
     return GestureDetector(
       onTap: _toggleCalendarFormat,
       child: widget.headerStyle.isIconEnable
-          ? widget.headerStyle.icon
+          ? Container(child: widget.headerStyle.icon)
           : Container(
               decoration: widget.headerStyle.formatButtonDecoration,
               padding: widget.headerStyle.formatButtonPadding,

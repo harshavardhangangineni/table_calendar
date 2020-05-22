@@ -187,8 +187,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             weekdayStyle:
                 TextStyle(color: Colors.white, fontFamily: 'Poppins')),
         headerStyle: HeaderStyle(
-          headerMargin: EdgeInsets.fromLTRB(28, 0, 26, 26),
-          headerPadding: EdgeInsets.symmetric(vertical: 20),
+          headerMargin: EdgeInsets.fromLTRB(28, 0, 26, 15),
+          headerPadding: EdgeInsets.only(top: 20),
           canShowArrows: false,
           formatButtonVisible: false,
           titleTextStyle: TextStyle(
@@ -197,10 +197,11 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           icon: Icon(
             Icons.calendar_today,
             color: Colors.white,
-            size: 17,
+            size: 20,
           ),
           formatButtonTextStyle: TextStyle().copyWith(
               color: Colors.white, fontSize: 15.0, fontFamily: 'Poppins'),
+          formatButtonPadding: EdgeInsets.all(20),
           formatButtonDecoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(16.0),
