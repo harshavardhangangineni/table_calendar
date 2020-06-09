@@ -226,10 +226,14 @@ class TableCalendar extends StatefulWidget {
 
 class _TableCalendarState extends State<TableCalendar>
     with SingleTickerProviderStateMixin {
+  BuildContext nowcontext;
+  GlobalKey _globalKey;
+
+  bool isDisplayText = false;
   @override
   void initState() {
     super.initState();
-
+    _globalKey = GlobalKey();
     widget.calendarController._init(
       events: widget.events,
       holidays: widget.holidays,
@@ -297,12 +301,18 @@ class _TableCalendarState extends State<TableCalendar>
     });
   }
 
-  void _onHorizontalSwipe(DismissDirection direction) {
+  void _onHorizontalSwipe(DismissDirection direction) async {
     if (direction == DismissDirection.startToEnd) {
       // Swipe right
       _selectPrevious();
+      await Future.delayed(Duration(milliseconds: 400));
+
+      OverlayEntry myOverlay = _createOverlay();
+      Overlay.of(context).insert(myOverlay);
+      await Future.delayed(Duration(milliseconds: 500));
+
+      myOverlay.remove();
     } else {
-      // Swipe left
       _selectNext();
     }
   }
@@ -357,8 +367,10 @@ class _TableCalendarState extends State<TableCalendar>
 
   @override
   Widget build(BuildContext context) {
+    this.nowcontext = context;
     return ClipRect(
       child: Column(
+        key: _globalKey,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           if (widget.headerVisible) _buildHeader(),
@@ -385,7 +397,7 @@ class _TableCalendarState extends State<TableCalendar>
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -798,5 +810,33 @@ class _TableCalendarState extends State<TableCalendar>
         ),
       );
     }
+  }
+
+  OverlayEntry _createOverlay() {
+    RenderBox box = _globalKey.currentContext.findRenderObject();
+    return OverlayEntry(builder: (context) {
+      return Positioned(
+          top: box.size.height.toInt() > 400 ? 230 : 200,
+          left: 20,
+          right: 20,
+          child: Material(
+            color: Colors.transparent,
+            child: AnimatedContainer(
+              duration: Duration(seconds: 2),
+              color: Colors.white.withOpacity(.1),
+              width: box.size.width,
+              height: box.size.height.toInt() > 400
+                  ? box.size.height - 230
+                  : box.size.height - 200,
+              child: Center(
+                child: Text("November",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontFamily: 'POPPINS')),
+              ),
+            ),
+          ));
+    });
   }
 }

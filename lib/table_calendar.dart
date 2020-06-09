@@ -6,6 +6,8 @@ library table_calendar;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:simple_gesture_detector/simple_gesture_detector.dart';
+import 'package:table_calendar/src/customization/ovelaywidget.dart';
+import 'package:table_calendar/src/customization/toast_utils.dart';
 
 part 'src/calendar.dart';
 part 'src/calendar_controller.dart';
