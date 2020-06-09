@@ -89,7 +89,13 @@ class CalendarStyle {
   /// Specifies whether or not Today should be highlighted.
   final bool highlightToday;
 
+  final bool canShowOverlay;
+
+  final int overlayTimeLimit;
+
   const CalendarStyle({
+    this.canShowOverlay = false,
+    this.overlayTimeLimit = 2,
     this.weekdayStyle = const TextStyle(),
     this.weekendStyle =
         const TextStyle(color: const Color(0xFFF44336)), // Material red[500]

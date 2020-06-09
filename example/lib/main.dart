@@ -47,6 +47,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   AnimationController _animationController;
   CalendarController _calendarController;
 
+  bool showOverlay = false;
+
   @override
   void initState() {
     super.initState();
@@ -122,7 +124,12 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   }
 
   void _onVisibleDaysChanged(
-      DateTime first, DateTime last, CalendarFormat format) {}
+      DateTime first, DateTime last, CalendarFormat format) {
+    if (format == CalendarFormat.month)
+      setState(() {
+        showOverlay = true;
+      });
+  }
 
   void _onCalendarCreated(
       DateTime first, DateTime last, CalendarFormat format) {
@@ -170,6 +177,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             todayColor: Colors.transparent,
             outsideStyle: TextStyle(color: Colors.white, fontFamily: 'Poppins'),
             weekdayStyle: TextStyle(color: Colors.white, fontFamily: 'Poppins'),
+            canShowOverlay: this.showOverlay,
             outsideWeekendStyle:
                 TextStyle(color: Colors.white, fontFamily: 'Poppins'),
             outsideHolidayStyle:

@@ -305,15 +305,10 @@ class _TableCalendarState extends State<TableCalendar>
     if (direction == DismissDirection.startToEnd) {
       // Swipe right
       _selectPrevious();
-      await Future.delayed(Duration(milliseconds: 400));
-
-      OverlayEntry myOverlay = _createOverlay();
-      Overlay.of(context).insert(myOverlay);
-      await Future.delayed(Duration(milliseconds: 500));
-
-      myOverlay.remove();
+      if (widget.calendarStyle.canShowOverlay) await overlayMethod();
     } else {
       _selectNext();
+      if (widget.calendarStyle.canShowOverlay) await overlayMethod();
     }
   }
 
@@ -816,27 +811,46 @@ class _TableCalendarState extends State<TableCalendar>
     RenderBox box = _globalKey.currentContext.findRenderObject();
     return OverlayEntry(builder: (context) {
       return Positioned(
-          top: box.size.height.toInt() > 400 ? 230 : 200,
-          left: 20,
-          right: 20,
+          top: 80 + 50.0,
           child: Material(
             color: Colors.transparent,
             child: AnimatedContainer(
+              curve: Curves.fastLinearToSlowEaseIn,
               duration: Duration(seconds: 2),
-              color: Colors.white.withOpacity(.1),
+              color: Colors.white.withOpacity(.8),
               width: box.size.width,
-              height: box.size.height.toInt() > 400
-                  ? box.size.height - 230
-                  : box.size.height - 200,
+              height: box.size.height - 50.0,
               child: Center(
-                child: Text("November",
+                child: Text(getDate(),
                     style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w900,
                         fontSize: 18,
                         fontFamily: 'POPPINS')),
               ),
             ),
           ));
     });
+  }
+
+  String getDate() {
+    var date = DateTime.now();
+    var calendarDate = widget.calendarController
+        .visibleDays[widget.calendarController.visibleDays.length ~/ 2];
+
+    if (date.year != calendarDate.year) {
+      return DateFormat("MMMM yyyy").format(calendarDate);
+    } else {
+      return DateFormat.MMMM().format(calendarDate);
+    }
+  }
+
+  Future<void> overlayMethod() async {
+    await Future.delayed(Duration(milliseconds: 350));
+    OverlayEntry myOverlay = _createOverlay();
+    Overlay.of(context).insert(myOverlay);
+    await Future.delayed(
+        Duration(seconds: widget.calendarStyle.overlayTimeLimit));
+    myOverlay.remove();
   }
 }
