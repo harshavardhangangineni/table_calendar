@@ -330,6 +330,16 @@ class _TableCalendarState extends State<TableCalendar>
     }
   }
 
+  String _getSelectedDate(date) {
+    if (date.month == DateTime.now().month &&
+        date.year == DateTime.now().year) {
+      if (date.day == DateTime.now().day)
+        return "Today";
+      else if (date.day == ((DateTime.now().day) + 1)) return "Tomorrow";
+    }
+    return DateFormat.yMMMMd().format(date);
+  }
+
   void _onHeaderLongPressed() {
     if (widget.onHeaderLongPressed != null) {
       widget.onHeaderLongPressed(widget.calendarController.focusedDay);
@@ -413,11 +423,13 @@ class _TableCalendarState extends State<TableCalendar>
           onTap: _onHeaderTapped,
           onLongPress: _onHeaderLongPressed,
           child: Text(
-            widget.headerStyle.titleTextBuilder != null
-                ? widget.headerStyle.titleTextBuilder(
-                    widget.calendarController.focusedDay, widget.locale)
-                : DateFormat.yMMMM(widget.locale)
-                    .format(widget.calendarController.focusedDay),
+            widget.headerStyle.showFocusedDate
+                ? _getSelectedDate(widget.calendarController.selectedDay)
+                : widget.headerStyle.titleTextBuilder != null
+                    ? widget.headerStyle.titleTextBuilder(
+                        widget.calendarController.focusedDay, widget.locale)
+                    : DateFormat.yMMMM(widget.locale)
+                        .format(widget.calendarController.focusedDay),
             style: widget.headerStyle.titleTextStyle,
             textAlign: widget.headerStyle.centerHeaderTitle
                 ? TextAlign.center
@@ -779,7 +791,9 @@ class _TableCalendarState extends State<TableCalendar>
           context, date, widget.calendarController.visibleEvents[eventKey]);
     } else {
       return _CellWidget(
-        text: '${date.day}',
+        text: date.day == 1
+            ? '${DateFormat.MMM().format(date)}'
+            : '${date.day}',
         isUnavailable: tIsUnavailable,
         isSelected: tIsSelected,
         isToday: tIsToday,
@@ -850,7 +864,7 @@ class _TableCalendarState extends State<TableCalendar>
     OverlayEntry myOverlay = _createOverlay();
     Overlay.of(context).insert(myOverlay);
     await Future.delayed(
-        Duration(seconds: widget.calendarStyle.overlayTimeLimit));
+        Duration(milliseconds: widget.calendarStyle.overlayTimeLimit));
     myOverlay.remove();
   }
 }
