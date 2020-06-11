@@ -36,15 +36,13 @@ class _CellWidget extends StatelessWidget {
       alignment: Alignment.center,
       child: text.length > 2
           ? Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                RotatedBox(
-                  quarterTurns: -1,
-                  child: Text(text, style: _buildCellTextStyle()),
-                ),
+                Text(text, style: _buildCellTextStyle()),
                 Text(
                   "1",
                   style: _buildCellTextStyle(),
-                )
+                ),
               ],
             )
           : Text(
