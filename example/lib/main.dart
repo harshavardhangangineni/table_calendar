@@ -129,6 +129,12 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       setState(() {
         showOverlay = true;
       });
+    else
+    {
+      setState(() {
+        showOverlay=false;
+      });
+    }
   }
 
   void _onCalendarCreated(
@@ -163,6 +169,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     return Container(
       color: Colors.blue,
       child: TableCalendar(
+        initialSelectedDay:null,
         calendarController: _calendarController,
         events: _events,
         holidays: _holidays,
@@ -172,6 +179,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           CalendarFormat.week: '',
         },
         calendarStyle: CalendarStyle(
+          overlayTimeLimit: 1000,
             selectedColor: Colors.white,
             selectedStyle: TextStyle(color: Colors.blue, fontFamily: 'Poppins'),
             todayColor: Colors.transparent,
@@ -193,6 +201,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             weekdayStyle:
                 TextStyle(color: Colors.white, fontFamily: 'Poppins')),
         headerStyle: HeaderStyle(
+          showFocusedDate: true,
           headerMargin: EdgeInsets.fromLTRB(28, 0, 26, 15),
           headerPadding: EdgeInsets.only(top: 20),
           canShowArrows: false,
