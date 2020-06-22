@@ -760,8 +760,7 @@ class _TableCalendarState extends State<TableCalendar>
         !tIsHoliday;
 
     if (isUnavailable) {
-      return widget.builders.unavailableDayBuilder(
-          context, date, widget.calendarController.visibleEvents[eventKey]);
+      return null;
     } else if (isSelected && widget.calendarStyle.renderSelectedFirst) {
       return widget.builders.selectedDayBuilder(
           context, date, widget.calendarController.visibleEvents[eventKey]);
