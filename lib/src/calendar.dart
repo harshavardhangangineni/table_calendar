@@ -849,8 +849,9 @@ class _TableCalendarState extends State<TableCalendar>
 
   String getDate() {
     var date = DateTime.now();
-    var calendarDate = widget.calendarController
-        .visibleDays[widget.calendarController.visibleDays.length ~/ 2];
+      var calendarDate=widget.calendarController.focusedDay;
+//     var calendarDate = widget.calendarController
+//         .visibleDays[widget.calendarController.visibleDays.length ~/ 2];
 
     if (date.year != calendarDate.year) {
       return DateFormat("MMMM yyyy").format(calendarDate);
