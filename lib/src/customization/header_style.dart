@@ -8,6 +8,9 @@ class HeaderStyle {
   /// Responsible for making title Text centered.
   final bool centerHeaderTitle;
 
+  /// Responsible for showing Focused Data
+  final bool showFocusedDate;
+
   /// Responsible for FormatButton visibility.
   final bool formatButtonVisible;
 
@@ -78,6 +81,7 @@ class HeaderStyle {
       {this.centerHeaderTitle = false,
       this.formatButtonVisible = true,
       this.formatButtonShowsNext = true,
+      this.showFocusedDate = false,
       this.titleTextBuilder,
       this.titleTextStyle = const TextStyle(fontSize: 17.0),
       this.formatButtonTextStyle = const TextStyle(),

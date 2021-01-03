@@ -34,10 +34,21 @@ class _CellWidget extends StatelessWidget {
       decoration: _buildCellDecoration(),
       margin: const EdgeInsets.all(4.0),
       alignment: Alignment.center,
-      child: Text(
-        text,
-        style: _buildCellTextStyle(),
-      ),
+      child: text.length > 2
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Text(text, style: _buildCellTextStyle()),
+                Text(
+                  "1",
+                  style: _buildCellTextStyle(),
+                ),
+              ],
+            )
+          : Text(
+              text,
+              style: _buildCellTextStyle(),
+            ),
     );
   }
 

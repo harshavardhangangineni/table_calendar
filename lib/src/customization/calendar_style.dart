@@ -95,7 +95,7 @@ class CalendarStyle {
 
   const CalendarStyle({
     this.canShowOverlay = false,
-    this.overlayTimeLimit = 2,
+    this.overlayTimeLimit = 2000,
     this.weekdayStyle = const TextStyle(),
     this.weekendStyle =
         const TextStyle(color: const Color(0xFFF44336)), // Material red[500]
